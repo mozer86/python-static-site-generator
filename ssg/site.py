@@ -12,7 +12,7 @@ class Site:
 
     def load_parser(self,extension):
         for parser in self.parsers:
-            if extension is valid_extension():
+            if parser is valid_extension(extension):
                 return parser
 
     def run_parser(self, path):
