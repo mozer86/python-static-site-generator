@@ -45,7 +45,3 @@ class Content(Mapping):
             if key != "content":
                 data[key] = value
         return str(data)
-
-    for value in self.data.items():
-        if value != "content":
-            value = data[key]
