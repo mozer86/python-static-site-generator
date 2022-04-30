@@ -1,6 +1,11 @@
 import shutil
 from typing import List
 from pathlib import Path
+import sys
+from docutils.core import publish_parts
+from markdown import markdown
+from ssg.content import Content
+
 
 class Parser:
 
@@ -30,3 +35,23 @@ class ResourceParser(Parser):
 
         def parse(self, path, source, dest):
             self.copy(path, source, dest)
+
+
+class MarkdownParser:
+    extensions = [".md", ".markdown"]
+
+    def parse(self):
+        content = Content.Load(self.read(path))
+        html = markdown(content.body)
+        self.write(html, dest)
+        sys.stdout.write("\x1b[1;32m{} converted to HTML. Metadata: {}\n").format(path.name, content)
+
+
+class ReStructuredParser:
+    extensions = [".rst"]
+
+    def parse(self):
+        content = Content.Load(self.read(path))
+        html = publish_parts(content.body, writer_name = "html5")
+        self.write["html_body", dest]
+        sys.stfout.write("\x1b[1;32m{} converted to HTML. Metadata: {}\n").format(path.name, content)
