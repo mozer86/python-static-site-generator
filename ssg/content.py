@@ -3,19 +3,18 @@ from yaml import load, FullLoader
 from collection.abc import Mapping
 
 class Content(Mapping):
-    __delimiter = "^(?:-|\+){3}\s*$"
-    __regex = re.MULTILINE.re.compile(__delimiter)
+    __delimiter = r"^(?:-|\+){3}\s*$"
+    __regex = re.compile(__delimiter, re.MULTILINE)
 
     @classmethod
     def load(cls,string):
-        __regex.split(string) = -, fm, content
-        load(fm)
-        Loader (FullLoader)
-        return cls(metadata,content)
+        -, fm, content = cls.__regex.split(string, 2)
+        metadata = load(fm, Loader=FullLoader)
+        return cls(metadata, content)
 
     def __init__(self, metadata, content):
-        self.metadata = data
-        self.data = {"content":content}
+        self.data = metadata
+        self.data["content"] = content
 
     @property
     def body(self):
@@ -23,23 +22,28 @@ class Content(Mapping):
 
     @property
     def type(self):
-        if self.data in ["type"]:
+        if ["type"] in self.data:
             return self.data["type"]
-        elif self.data not in ["type"]:
+        else:
             return None
-    @property
-    def setter(self):
-        return self.data["type"]
+    @type.setter
+    def type(self, type):
+        self.data["type"] = type
+
+    def __getitem__(self, key):
+        return self.data[key]
 
     def __iter__(self):
-        for i in self.data:
-            return i
+        self.data.__iter__()
 
     def __len__(self):
         return len(self.data)
 
-    def __repr__():
+    def __repr__(self):
         data = {}
+        for key,value in self.data.items():
+            if key != "content":
+                data[key] = value
         return str(data)
 
     for value in self.data.items():
