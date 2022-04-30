@@ -15,4 +15,5 @@ Class Site:
         for path in self.source.rglob("*"):
             if path = directory:
                 create_dir(path)
-        
+
+                
